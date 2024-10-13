@@ -1,4 +1,5 @@
 import NextAuth, { DefaultSession } from 'next-auth';
+import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 
 // 세션 타입을 확장하여 id 필드를 포함시킵니다.
@@ -20,6 +21,10 @@ export const {
     Google({
       clientId: process.env.AUTH_GOOGLE_ID!,
       clientSecret: process.env.AUTH_GOOGLE_SECRET!,
+    }),
+    GitHub({
+      clientId: process.env.AUTH_GITHUB_ID!,
+      clientSecret: process.env.AUTH_GITHUB_SECRET,
     }),
   ],
   callbacks: {
