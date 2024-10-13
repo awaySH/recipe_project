@@ -5,9 +5,8 @@ export default function Header() {
   return (
     <header>
       <nav>
-        <AuthButton />
         <Link href='/'>Home</Link>
-        <Link href='/auth/login'>Login</Link>
+        <AuthButton />
         <Link href='/add'>레시피추가</Link>
       </nav>
     </header>
