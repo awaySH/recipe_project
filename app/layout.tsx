@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: 'Recipe App',
-  description: 'A delicious recipe sharing platform',
+  description: 'A recipe sharing platform',
 };
 
 export default function RootLayout({
