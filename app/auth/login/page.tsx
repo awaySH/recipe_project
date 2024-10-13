@@ -25,7 +25,7 @@ export default function Login() {
   return (
     <div>
       <h1>Login</h1>
-      <button onClick={() => handleLogin('github')}>Login with Google</button>
+      <button onClick={() => handleLogin('google')}>Login with Google</button>
       <button onClick={() => handleLogin('github')}>Login with GitHub</button>
     </div>
   );
