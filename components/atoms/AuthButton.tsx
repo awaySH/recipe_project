@@ -1,23 +1,21 @@
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useEffect } from 'react';
 import { setUser, removeUser } from '@/lib/auth';
 
 export default function AuthButton() {
   const { data: session, status } = useSession();
-  const router = useRouter();
 
   useEffect(() => {
     if (session?.user) {
       setUser(session.user);
-      console.log('Google 로그인 성공:', session.user);
+      console.log('로그인 성공:', session.user);
     }
   }, [session]);
 
   const handleSignIn = () => {
-    router.push('/auth/login');
+    signIn(); // NextAuth의 기본 로그인 페이지로 리다이렉트
   };
 
   const handleSignOut = () => {
