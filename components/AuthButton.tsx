@@ -1,11 +1,13 @@
 'use client';
 
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { setUser, removeUser } from '@/lib/auth';
 
 export default function AuthButton() {
   const { data: session, status } = useSession();
+  const router = useRouter();
 
   useEffect(() => {
     if (session?.user) {
@@ -15,7 +17,7 @@ export default function AuthButton() {
   }, [session]);
 
   const handleSignIn = () => {
-    signIn('google');
+    router.push('/auth/login');
   };
 
   const handleSignOut = () => {
@@ -33,6 +35,6 @@ export default function AuthButton() {
       <button onClick={handleSignOut}>Logout</button>
     </div>
   ) : (
-    <button onClick={handleSignIn}>Login with Google</button>
+    <button onClick={handleSignIn}>Login</button>
   );
 }
