@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import AuthButton from '../atoms/AuthButton';
+import AuthButton from '../molecules/AuthButton';
 
 export default function Header() {
   return (

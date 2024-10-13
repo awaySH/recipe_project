@@ -1,4 +1,4 @@
-import RecipeList from '@/components/molecules/RecipeList';
+import RecipeList from '@/components/organisms/RecipeList';
 
 export default function Home() {
   return (

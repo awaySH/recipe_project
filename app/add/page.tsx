@@ -3,10 +3,10 @@
 import { useRouter } from 'next/navigation';
 import { useRef, useState } from 'react';
 import Button from '@/components/atoms/Button';
-import Ingredients from '@/components/molecules/Ingredients';
 import LabelInput from '@/components/molecules/LabelInput';
-import Process from '@/components/molecules/Process';
-import Tags from '@/components/molecules/Tags';
+import Ingredients from '@/components/organisms/Ingredients';
+import Process from '@/components/organisms/Process';
+import Tags from '@/components/organisms/Tags';
 import { type Recipe, useRecipes } from '../../app/hooks/Recipe-Context';
 
 export default function add() {
