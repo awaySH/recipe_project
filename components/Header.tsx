@@ -4,7 +4,7 @@ export default function Header() {
   return (
     <header>
       <nav>
-        <Link href='/'>Home</Link>
+        <Link href='/'>home</Link>
         <Link href='/auth/login'>Login</Link>
       </nav>
     </header>
