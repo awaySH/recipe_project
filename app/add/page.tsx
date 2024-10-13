@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useId, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Button from '@/components/atoms/Button';
 import Ingredients from '@/components/molecules/Ingredients';
 import LabelInput from '@/components/molecules/LabelInput';
@@ -11,7 +11,7 @@ import { type Recipe, useRecipes } from '../../app/hooks/Recipe-Context';
 
 export default function add() {
   const router = useRouter();
-  const { addRecipe } = useRecipes();
+  const { recipes, addRecipe } = useRecipes();
 
   const [tags, setTags] = useState<string[]>([]);
   const [ingredients, setIngredients] = useState<string[]>([]);
@@ -21,8 +21,6 @@ export default function add() {
   const tagRef = useRef<HTMLInputElement>(null);
   const ingredientRef = useRef<HTMLInputElement>(null);
   const processRef = useRef<HTMLInputElement>(null);
-
-  const newId = useId();
 
   const addTag = () => {
     if (tagRef.current && tagRef.current.value) {
@@ -62,6 +60,8 @@ export default function add() {
 
   const saveRecipe = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const newId = Math.max(...recipes.map(({ id }) => id), 0) + 1;
 
     const newRecipe: Recipe = {
       id: newId,

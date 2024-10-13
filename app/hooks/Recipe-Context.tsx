@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 export type Recipe = {
-  id: string;
+  id: number;
   title: string;
   tags: string[];
   ingredients: string[];
