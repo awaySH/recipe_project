@@ -1,8 +1,8 @@
 import NextAuth, { DefaultSession } from 'next-auth';
+import Credentials from 'next-auth/providers/credentials';
 import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
 
-// 세션 타입을 확장하여 id 필드를 포함시킵니다.
 declare module 'next-auth' {
   interface Session {
     user: {
@@ -18,13 +18,37 @@ export const {
   signOut,
 } = NextAuth({
   providers: [
+    Credentials({
+      name: 'Email',
+      credentials: {
+        email: {
+          label: '이메일',
+          type: 'email',
+          placeholder: 'example@example.com',
+        },
+        passwd: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        if (!credentials || !credentials.email || !credentials.passwd)
+          return null;
+
+        const { email } = credentials;
+        const user = {
+          id: '1',
+          name: '익명',
+          email: email,
+          image: '/images/profile.png',
+        } as User;
+        return user;
+      },
+    }),
     Google({
       clientId: process.env.AUTH_GOOGLE_ID!,
       clientSecret: process.env.AUTH_GOOGLE_SECRET!,
     }),
     GitHub({
       clientId: process.env.AUTH_GITHUB_ID!,
-      clientSecret: process.env.AUTH_GITHUB_SECRET,
+      clientSecret: process.env.AUTH_GITHUB_SECRET!,
     }),
   ],
   callbacks: {
