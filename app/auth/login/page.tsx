@@ -6,9 +6,9 @@ import { useRouter } from 'next/navigation';
 export default function Login() {
   const router = useRouter();
 
-  const handleGoogleLogin = async () => {
+  const handleLogin = async (provider: string) => {
     try {
-      const result = await signIn('google', {
+      const result = await signIn(provider, {
         callbackUrl: '/',
         redirect: false,
       });
@@ -25,7 +25,8 @@ export default function Login() {
   return (
     <div>
       <h1>Login</h1>
-      <button onClick={handleGoogleLogin}>Login with Google</button>
+      <button onClick={() => handleLogin('github')}>Login with Google</button>
+      <button onClick={() => handleLogin('github')}>Login with GitHub</button>
     </div>
   );
 }
