@@ -25,3 +25,28 @@ body {
     text-wrap: balance;
   }
 }
+
+
+input.inp {
+  @apply  rounded-md border px-2 py-1 focus:border-slate-800 focus:outline-none focus:ring-0;
+}
+
+@layer components {
+  .btn {
+    @apply border-spacing-1.5 rounded-md border px-2 py-1 uppercase shadow-md hover:bg-slate-100 focus:ring focus:ring-opacity-75;
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-400;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-400;
+    /* background-color: theme('colors.red.600');
+    padding: 10px theme('padding.3'); */
+  }
+
+  .btn-success {
+    @apply bg-green-600 text-white hover:bg-green-700 focus:ring-green-400;
+  }
+}
