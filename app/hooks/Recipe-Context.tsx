@@ -69,7 +69,8 @@ const recipeReducer = (state: Recipe[], action: Action): Recipe[] => {
 export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [recipes, dispatch] = useReducer(recipeReducer, []);
+  const initialState = JSON.parse(localStorage.getItem('recipes') || '[]');
+  const [recipes, dispatch] = useReducer(recipeReducer, initialState);
 
   useEffect(() => {
     const storedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
