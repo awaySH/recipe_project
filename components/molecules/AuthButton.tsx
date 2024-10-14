@@ -1,6 +1,7 @@
 'use client';
 
 import { signIn, signOut, useSession } from 'next-auth/react';
+import Image from 'next/image';
 import { useEffect } from 'react';
 import { setUser, removeUser } from '@/lib/auth';
 
@@ -23,16 +24,31 @@ export default function AuthButton() {
     removeUser();
   };
 
+  const buttonClass =
+    'font-semibold text-white hover:text-sub-green transition-colors duration-200';
+
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
 
   return session ? (
-    <div>
-      <span>Welcome, {session.user.name}</span>
-      <button onClick={handleSignOut}>Logout</button>
+    <div className='flex items-center space-x-4'>
+      <button onClick={handleSignOut} className={buttonClass}>
+        로그아웃
+      </button>
+      {session.user.image && (
+        <Image
+          src={session.user.image}
+          alt={session.user.name || 'User profile'}
+          width={32}
+          height={32}
+          className='rounded-full'
+        />
+      )}
     </div>
   ) : (
-    <button onClick={handleSignIn}>Login</button>
+    <button onClick={handleSignIn} className={buttonClass}>
+      로그인
+    </button>
   );
 }
