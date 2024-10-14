@@ -3,6 +3,7 @@
 import { useRecipes } from '@/app/hooks/Recipe-Context';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import Timer from '@/components/organisms/Timer';
 
 export default function RecipeDetail() {
   const { id } = useParams();
@@ -22,6 +23,8 @@ export default function RecipeDetail() {
   return (
     <div>
       <h1>{recipe.title}</h1>
+      <h2>조리 타이머</h2>
+      <Timer onTimeUp={() => alert('타이머가 끝났습니다!')} />
       <p>태그: {recipe.tags.join(', ')}</p>
       <h2>재료</h2>
       <ul>
@@ -39,6 +42,7 @@ export default function RecipeDetail() {
       <Link href={`/recipes/edit/${recipe.id}`}>
         <button>수정하기</button>
       </Link>
+      <Link href='/'>목록으로</Link>
     </div>
   );
 }
