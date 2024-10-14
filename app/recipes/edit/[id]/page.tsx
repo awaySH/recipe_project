@@ -101,7 +101,7 @@ export default function EditRecipe() {
       setIngredients(recipe.ingredients || []);
       setProcesses(recipe.processes || []);
     }
-  }, []);
+  }, [recipe]);
 
   if (!recipe) {
     return <div>레시피를 찾을 수 없습니다.</div>;

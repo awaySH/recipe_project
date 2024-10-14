@@ -2,12 +2,13 @@
 
 import { useRecipes } from '@/app/hooks/Recipe-Context';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Timer from '@/components/organisms/Timer';
 
 export default function RecipeDetail() {
   const { id } = useParams();
-  const { recipes } = useRecipes();
+  const { recipes, restoreRecipe } = useRecipes();
+  const router = useRouter();
 
   const recipeVersions = recipes.find(
     (r) => r[r.length - 1].id.toString() === id
@@ -16,9 +17,21 @@ export default function RecipeDetail() {
     ? recipeVersions[recipeVersions.length - 1]
     : null;
 
-  if (!recipe) {
+  if (!recipe || !recipeVersions) {
     return <div>레시피를 찾을 수 없습니다.</div>;
   }
+
+  const currentVersion = recipeVersions.length;
+
+  const handleRestorePreviousVersion = () => {
+    if (recipeVersions.length > 1) {
+      const updatedVersions = recipeVersions.slice(0, -1);
+      restoreRecipe(updatedVersions);
+      router.refresh();
+    } else {
+      alert('이전 버전이 없습니다.');
+    }
+  };
 
   return (
     <div>
@@ -38,11 +51,20 @@ export default function RecipeDetail() {
           <li key={index}>{process}</li>
         ))}
       </ol>
-      <p>{recipe.saveTime}</p>
-      <Link href={`/recipes/edit/${recipe.id}`}>
-        <button>수정하기</button>
-      </Link>
-      <Link href='/'>목록으로</Link>
+      <p>
+        버전 {currentVersion} ({recipe.saveTime})
+      </p>
+      {currentVersion > 1 && (
+        <button onClick={handleRestorePreviousVersion}>
+          이전 버전으로 복원하기
+        </button>
+      )}
+      <div>
+        <Link href={`/recipes/edit/${recipe.id}`}>
+          <button>수정하기</button>
+        </Link>
+        <Link href='/'>목록으로</Link>
+      </div>
     </div>
   );
 }
