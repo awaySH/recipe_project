@@ -12,7 +12,10 @@ const RecipeList: React.FC = () => {
       <h2>레시피 목록</h2>
       <ul>
         {recipes.map((recipe) => (
-          <RecipeItem key={recipe.id} recipe={recipe} />
+          <RecipeItem
+            key={recipe[recipe.length - 1].id}
+            recipe={recipe[recipe.length - 1]}
+          />
         ))}
       </ul>
     </div>

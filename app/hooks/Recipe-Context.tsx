@@ -8,10 +8,11 @@ export type Recipe = {
   tags: string[];
   ingredients: string[];
   processes: string[];
+  saveTime: string;
 };
 
 type RecipeContextType = {
-  recipes: Recipe[];
+  recipes: Recipe[][];
   addRecipe: (recipe: Recipe) => void;
 };
 
@@ -20,18 +21,18 @@ const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
 export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[][]>([]);
+
+  const addRecipe = (newRecipe: Recipe) => {
+    const updatedRecipes = [...recipes, [newRecipe]];
+    setRecipes(updatedRecipes);
+    localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
+  };
 
   useEffect(() => {
     const storedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
     setRecipes(storedRecipes);
   }, []);
-
-  const addRecipe = (recipe: Recipe) => {
-    const updatedRecipes = [...recipes, recipe];
-    setRecipes(updatedRecipes);
-    localStorage.setItem('recipes', JSON.stringify(updatedRecipes));
-  };
 
   return (
     <RecipeContext.Provider value={{ recipes, addRecipe }}>

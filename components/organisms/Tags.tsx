@@ -1,11 +1,11 @@
 import React from 'react';
 
 type TagProps = {
-  tags: string[];
+  tags?: string[];
   onDelete?: (index: number) => void;
 };
 
-const Tag: React.FC<TagProps> = ({ tags, onDelete }) => {
+const Tag: React.FC<TagProps> = ({ tags = [], onDelete }) => {
   return (
     <div className='flex flex-wrap gap-2'>
       {tags.map((tag, index) => (

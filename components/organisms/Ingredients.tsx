@@ -1,12 +1,12 @@
 import React from 'react';
 
 type IngredientProps = {
-  ingredients: string[];
+  ingredients?: string[];
   onDelete?: (index: number) => void;
 };
 
 const IngredientList: React.FC<IngredientProps> = ({
-  ingredients,
+  ingredients = [],
   onDelete,
 }) => {
   return (

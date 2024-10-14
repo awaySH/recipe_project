@@ -61,7 +61,17 @@ export default function add() {
   const saveRecipe = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newId = Math.max(...recipes.map(({ id }) => id), 0) + 1;
+    const newId = Math.max(...recipes.map((recipe) => recipe[0].id), 0) + 1;
+
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    const saveTime = `수정일: ${year}.${month}.${day}일 ${hours}시 ${minutes}분 ${seconds}초`;
 
     const newRecipe: Recipe = {
       id: newId,
@@ -69,6 +79,7 @@ export default function add() {
       tags: tags,
       ingredients: ingredients,
       processes: processes,
+      saveTime: saveTime,
     };
 
     addRecipe(newRecipe);

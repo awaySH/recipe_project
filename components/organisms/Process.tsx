@@ -1,11 +1,11 @@
 import React from 'react';
 
 type ProcessProps = {
-  processes: string[];
+  processes?: string[];
   onDelete?: (index: number) => void;
 };
 
-const ProcessList: React.FC<ProcessProps> = ({ processes, onDelete }) => {
+const ProcessList: React.FC<ProcessProps> = ({ processes = [], onDelete }) => {
   return (
     <ul className='list-disc'>
       {processes.map((process, index) => (
