@@ -1,6 +1,6 @@
 'use client';
 
-import { Recipe, useRecipes } from '@/app/hooks/Recipe-Context';
+import { RecipeVersion, useRecipes } from '@/app/hooks/Recipe-Context';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import Button from '@/components/atoms/Button';
@@ -11,7 +11,6 @@ import Tags from '@/components/organisms/Tags';
 
 export default function EditRecipe() {
   const router = useRouter();
-
   const { id } = useParams();
   const { recipes, editRecipe } = useRecipes();
 
@@ -25,10 +24,9 @@ export default function EditRecipe() {
   const ingredientRef = useRef<HTMLInputElement>(null);
   const processRef = useRef<HTMLInputElement>(null);
 
-  const recipeVersions = recipes.find((r) => r[0].id.toString() === id);
-
-  const recipe = recipeVersions
-    ? recipeVersions[recipeVersions.length - 1]
+  const recipe = recipes.find((r) => r.id.toString() === id);
+  const currentVersion = recipe
+    ? recipe.versions[recipe.currentVersion - 1]
     : null;
 
   const addTag = () => {
@@ -71,17 +69,17 @@ export default function EditRecipe() {
     e.preventDefault();
 
     const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const saveTime = now.toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
-    const saveTime = `수정일: ${year}.${month}.${day}일 ${hours}시 ${minutes}분 ${seconds}초`;
-
-    const newRecipe: Recipe = {
-      id: +id,
+    const newVersion: RecipeVersion = {
+      version: (recipe?.versions.length || 0) + 1,
       title: titleRef.current?.value || '',
       tags: tags,
       ingredients: ingredients,
@@ -89,21 +87,23 @@ export default function EditRecipe() {
       saveTime: saveTime,
     };
 
-    editRecipe(newRecipe);
+    if (recipe) {
+      editRecipe(recipe.id, newVersion);
+    }
 
     router.push(`/recipes/${id}`);
   };
 
   useEffect(() => {
-    if (recipe) {
-      setTitle(recipe.title); // recipe.title로 초기값 설정
-      setTags(recipe.tags || []);
-      setIngredients(recipe.ingredients || []);
-      setProcesses(recipe.processes || []);
+    if (currentVersion) {
+      setTitle(currentVersion.title);
+      setTags(currentVersion.tags || []);
+      setIngredients(currentVersion.ingredients || []);
+      setProcesses(currentVersion.processes || []);
     }
-  }, [recipe]);
+  }, [currentVersion]);
 
-  if (!recipe) {
+  if (!currentVersion) {
     return <div>레시피를 찾을 수 없습니다.</div>;
   }
 
