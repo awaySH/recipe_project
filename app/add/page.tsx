@@ -9,7 +9,7 @@ import Process from '@/components/organisms/Process';
 import Tags from '@/components/organisms/Tags';
 import { type Recipe, useRecipes } from '../../app/hooks/Recipe-Context';
 
-export default function add() {
+export default function Add() {
   const router = useRouter();
   const { recipes, addRecipe } = useRecipes();
 
