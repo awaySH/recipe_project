@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../atoms/Button';
 
 type IngredientProps = {
   ingredients?: string[];
@@ -16,6 +17,7 @@ const IngredientList: React.FC<IngredientProps> = ({
           <span>{ingredient}</span>
           {onDelete && (
             <button
+              type='button'
               className='text-red-500 text-xs ml-2'
               onClick={() => onDelete(index)}
             >

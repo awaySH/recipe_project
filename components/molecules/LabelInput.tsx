@@ -10,7 +10,8 @@ import Button from '../atoms/Button';
 type Props = {
   label: string;
   inputType?: string;
-  placehoder?: string;
+  placeholder?: string;
+  defaultValue?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   inputClassNames?: string;
   inputAttrs?: InputHTMLAttributes<HTMLInputElement>;
@@ -25,9 +26,9 @@ function LabelInput(
     label,
     inputAttrs,
     inputType = 'text',
-    placehoder = `${label}을 입력하세요`,
+    defaultValue = '',
+    placeholder = `${label}을 입력하세요`,
     onChange = () => {},
-    // ref = null,
     inputClassNames = '',
     buttonClassNames = '',
     buttonText = '',
@@ -37,7 +38,6 @@ function LabelInput(
   ref: ForwardedRef<HTMLInputElement>
 ) {
   const id = useId();
-  // console.log('🚀  id:', id);
 
   return (
     <div className='my-3'>
@@ -48,7 +48,8 @@ function LabelInput(
         <input
           id={id}
           type={inputType}
-          placeholder={placehoder}
+          defaultValue={defaultValue}
+          placeholder={placeholder}
           className={`inp ${inputClassNames}`}
           onChange={onChange}
           ref={ref}

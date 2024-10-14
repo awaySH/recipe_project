@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../atoms/Button';
 
 type ProcessProps = {
   processes?: string[];
@@ -13,6 +14,7 @@ const ProcessList: React.FC<ProcessProps> = ({ processes = [], onDelete }) => {
           <span>{process}</span>
           {onDelete && (
             <button
+              type='button'
               className='text-red-500 text-xs ml-2'
               onClick={() => onDelete(index)}
             >

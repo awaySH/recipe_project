@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from '../atoms/Button';
 
 type TagProps = {
   tags?: string[];
@@ -16,7 +17,8 @@ const Tag: React.FC<TagProps> = ({ tags = [], onDelete }) => {
           {tag}
           {onDelete && (
             <button
-              className='ml-2 text-gray-600'
+              type='button'
+              className='ml-2 text-gray-600  '
               onClick={() => onDelete(index)}
             >
               ×
