@@ -5,10 +5,17 @@ export async function middleware(request: NextRequest) {
   const session = await auth();
 
   // 보호된 경로 목록
-  const protectedPaths = ['/dashboard', '/profile', '/settings'];
+  const protectedPaths = ['/add', '/recipes'];
 
-  if (!session && protectedPaths.includes(request.nextUrl.pathname)) {
-    return NextResponse.redirect(new URL('/api/auth/login', request.url));
+  const isProtectedPath = protectedPaths.some((path) =>
+    request.nextUrl.pathname.startsWith(path)
+  );
+
+  if (!session && isProtectedPath) {
+    // 로그인 페이지로 리다이렉트
+    const loginUrl = new URL('/api/auth/signin', request.url);
+    loginUrl.searchParams.set('callbackUrl', request.url);
+    return NextResponse.redirect(loginUrl);
   }
 
   return NextResponse.next();

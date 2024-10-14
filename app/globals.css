@@ -7,7 +7,7 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
@@ -26,9 +26,8 @@ body {
   }
 }
 
-
 input.inp {
-  @apply  rounded-md border px-2 py-1 focus:border-slate-800 focus:outline-none focus:ring-0;
+  @apply rounded-md border px-2 py-1 focus:border-slate-800 focus:outline-none focus:ring-0;
 }
 
 @layer components {
