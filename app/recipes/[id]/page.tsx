@@ -3,11 +3,12 @@
 import { useRecipes } from '@/app/hooks/Recipe-Context';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
+import Button from '@/components/atoms/Button';
 import Timer from '@/components/organisms/Timer';
 
 export default function RecipeDetail() {
   const { id } = useParams();
-  const { recipes, restoreRecipe } = useRecipes();
+  const { recipes, restoreRecipe, deleteRecipe } = useRecipes();
   const router = useRouter();
 
   const recipeVersions = recipes.find(
@@ -62,6 +63,9 @@ export default function RecipeDetail() {
       <div>
         <Link href={`/recipes/edit/${recipe.id}`}>
           <button>수정하기</button>
+        </Link>
+        <Link href={'/'}>
+          <Button onClick={() => deleteRecipe(+id)}>삭제하기</Button>
         </Link>
         <Link href='/'>목록으로</Link>
       </div>
