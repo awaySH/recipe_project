@@ -59,6 +59,7 @@ export const {
       return session;
     },
   },
+  trustHost: true,
 });
 
 // User 인터페이스 정의
