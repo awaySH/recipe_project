@@ -1,6 +1,7 @@
 'use client';
 
 import { useRecipes } from '@/app/hooks/Recipe-Context';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
 export default function RecipeDetail() {
@@ -35,6 +36,9 @@ export default function RecipeDetail() {
         ))}
       </ol>
       <p>{recipe.saveTime}</p>
+      <Link href={`/recipes/edit/${recipe.id}`}>
+        <button>수정하기</button>
+      </Link>
     </div>
   );
 }
