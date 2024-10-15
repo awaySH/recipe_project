@@ -5,7 +5,10 @@ type ProcessProps = {
   onDelete?: (index: number) => void;
 };
 
-const ProcessList: React.FC<ProcessProps> = ({ processes = [], onDelete }) => {
+export default function ProcessList({
+  processes = [],
+  onDelete,
+}: ProcessProps) {
   return (
     <ul className='list-disc'>
       {processes.map((process, index) => (
@@ -24,6 +27,4 @@ const ProcessList: React.FC<ProcessProps> = ({ processes = [], onDelete }) => {
       ))}
     </ul>
   );
-};
-
-export default ProcessList;
+}

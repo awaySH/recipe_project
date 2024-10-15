@@ -5,10 +5,10 @@ type IngredientProps = {
   onDelete?: (index: number) => void;
 };
 
-const IngredientList: React.FC<IngredientProps> = ({
+export default function IngredientList({
   ingredients = [],
   onDelete,
-}) => {
+}: IngredientProps) {
   return (
     <ul className='list-disc'>
       {ingredients.map((ingredient, index) => (
@@ -27,6 +27,4 @@ const IngredientList: React.FC<IngredientProps> = ({
       ))}
     </ul>
   );
-};
-
-export default IngredientList;
+}

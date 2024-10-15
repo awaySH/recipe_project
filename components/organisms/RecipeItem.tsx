@@ -6,7 +6,11 @@ import { Recipe } from '../../app/hooks/Recipe-Context';
 import Button from '../atoms/Button';
 import Tag from './Tags';
 
-const RecipeItem: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
+type RecipeItemProps = {
+  recipe: Recipe;
+};
+
+export default function RecipeItem({ recipe }: RecipeItemProps) {
   const currentVersion = recipe.versions[recipe.currentVersion - 1];
 
   return (
@@ -22,6 +26,4 @@ const RecipeItem: React.FC<{ recipe: Recipe }> = ({ recipe }) => {
       </li>
     </section>
   );
-};
-
-export default RecipeItem;
+}

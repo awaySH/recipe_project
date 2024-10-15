@@ -4,7 +4,7 @@ import React from 'react';
 import { useRecipes } from '../../app/hooks/Recipe-Context';
 import RecipeItem from './RecipeItem';
 
-const RecipeList: React.FC = () => {
+export default function RecipeList() {
   const { recipes } = useRecipes();
 
   if (!recipes || recipes.length === 0) {
@@ -21,6 +21,4 @@ const RecipeList: React.FC = () => {
       </ul>
     </div>
   );
-};
-
-export default RecipeList;
+}

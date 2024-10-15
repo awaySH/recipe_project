@@ -6,7 +6,7 @@ type TagProps = {
   onDelete?: (index: number) => void;
 };
 
-const Tag: React.FC<TagProps> = ({ tags = [], onDelete }) => {
+export default function Tag({ tags = [], onDelete }: TagProps) {
   return (
     <div className='flex flex-wrap gap-2'>
       {tags.map((tag, index) => (
@@ -18,7 +18,7 @@ const Tag: React.FC<TagProps> = ({ tags = [], onDelete }) => {
           {onDelete && (
             <button
               type='button'
-              className='ml-2 text-gray-600  '
+              className='ml-2 text-gray-600'
               onClick={() => onDelete(index)}
             >
               ×
@@ -28,6 +28,4 @@ const Tag: React.FC<TagProps> = ({ tags = [], onDelete }) => {
       ))}
     </div>
   );
-};
-
-export default Tag;
+}
