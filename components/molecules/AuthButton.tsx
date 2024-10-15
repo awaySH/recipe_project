@@ -2,17 +2,27 @@
 
 import { signIn, signOut, useSession } from 'next-auth/react';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { setUser, removeUser } from '@/lib/auth';
 
 export default function AuthButton() {
   const { data: session, status } = useSession();
-  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
-    setIsClient(true);
-  }, []);
+    if (session?.user) {
+      setUser(session.user);
+      console.log('로그인 성공:', session.user);
+    }
+  }, [session]);
 
-  if (!isClient) return null; // 서버 사이드 렌더링 시 아무것도 렌더링하지 않음
+  const handleSignIn = () => {
+    signIn(); // NextAuth의 기본 로그인 페이지로 리다이렉트
+  };
+
+  const handleSignOut = () => {
+    signOut();
+    removeUser();
+  };
 
   const buttonClass =
     'font-semibold text-white hover:text-sub-green transition-colors duration-200';
@@ -23,7 +33,7 @@ export default function AuthButton() {
 
   return session ? (
     <div className='flex items-center space-x-4'>
-      <button onClick={() => signOut()} className={buttonClass}>
+      <button onClick={handleSignOut} className={buttonClass}>
         로그아웃
       </button>
       {session.user.image && (
@@ -37,7 +47,7 @@ export default function AuthButton() {
       )}
     </div>
   ) : (
-    <button onClick={() => signIn()} className={buttonClass}>
+    <button onClick={handleSignIn} className={buttonClass}>
       로그인
     </button>
   );
