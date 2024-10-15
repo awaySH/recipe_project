@@ -2,6 +2,7 @@ import NextAuth, { DefaultSession } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GitHub from 'next-auth/providers/github';
 import Google from 'next-auth/providers/google';
+import Image from 'next/image';
 
 declare module 'next-auth' {
   interface Session {

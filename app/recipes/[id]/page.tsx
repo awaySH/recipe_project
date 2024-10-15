@@ -7,7 +7,7 @@ import Timer from '@/components/organisms/Timer';
 
 export default function RecipeDetail() {
   const { id } = useParams();
-  const { recipes, restoreVersion } = useRecipes();
+  const { recipes, restoreVersion, deleteRecipe } = useRecipes();
 
   const recipe = recipes.find((r) => r.id.toString() === id);
 
@@ -70,6 +70,14 @@ export default function RecipeDetail() {
         <Link href={`/recipes/edit/${recipe.id}`}>
           <button className='px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600'>
             수정하기
+          </button>
+        </Link>
+        <Link href={`/`}>
+          <button
+            className='px-4 py-2 bg-red-500 text-white rounded hover:bg-green-600'
+            onClick={() => deleteRecipe(+id)}
+          >
+            삭제하기
           </button>
         </Link>
         <Link href='/'>
