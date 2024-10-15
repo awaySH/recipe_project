@@ -1,6 +1,13 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import React, {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react';
 
 export type RecipeVersion = {
   version: number;
@@ -66,20 +73,35 @@ const recipeReducer = (state: Recipe[], action: Action): Recipe[] => {
   }
 };
 
-export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const initialState = JSON.parse(localStorage.getItem('recipes') || '[]');
-  const [recipes, dispatch] = useReducer(recipeReducer, initialState);
+export function RecipeProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<{ email: string } | null>(null);
+  const [recipes, dispatch] = useReducer(recipeReducer, []);
 
   useEffect(() => {
-    const storedRecipes = JSON.parse(localStorage.getItem('recipes') || '[]');
-    dispatch({ type: 'SET_RECIPES', recipes: storedRecipes });
+    const userString = localStorage.getItem('user');
+    const parsedUser = userString ? JSON.parse(userString) : null;
+    setUser(parsedUser);
   }, []);
 
+  // 사용자 정보가 변경될 때마다 레시피 로드
   useEffect(() => {
-    localStorage.setItem('recipes', JSON.stringify(recipes));
-  }, [recipes]);
+    if (user) {
+      const storedRecipes = JSON.parse(
+        localStorage.getItem(`recipes_${user.email}`) || '[]'
+      );
+      dispatch({ type: 'SET_RECIPES', recipes: storedRecipes });
+    } else {
+      // 로그아웃 시 레시피 초기화
+      dispatch({ type: 'SET_RECIPES', recipes: [] });
+    }
+  }, [user]);
+
+  // 레시피가 변경될 때마다 로컬 스토리지에 저장
+  useEffect(() => {
+    if (user) {
+      localStorage.setItem(`recipes_${user.email}`, JSON.stringify(recipes));
+    }
+  }, [recipes, user]);
 
   const addRecipe = (newRecipe: Recipe) => {
     dispatch({ type: 'ADD_RECIPE', recipe: newRecipe.versions[0] });
@@ -104,7 +126,7 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
       {children}
     </RecipeContext.Provider>
   );
-};
+}
 
 export const useRecipes = () => {
   const context = useContext(RecipeContext);
