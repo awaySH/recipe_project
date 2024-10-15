@@ -8,9 +8,9 @@ export default function IngredientList({
   onDelete,
 }: IngredientProps) {
   return (
-    <ul className='list-disc'>
+    <ul className='list-disc list-inside mb-4'>
       {ingredients.map((ingredient, index) => (
-        <li key={index} className='flex items-center py-1'>
+        <li key={index}>
           <span>{ingredient}</span>
           {onDelete && (
             <button

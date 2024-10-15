@@ -8,9 +8,9 @@ export default function ProcessList({
   onDelete,
 }: ProcessProps) {
   return (
-    <ul className='list-disc'>
+    <ol className='list-decimal list-inside'>
       {processes.map((process, index) => (
-        <li key={index} className='flex items-center py-1'>
+        <li key={index}>
           <span>{process}</span>
           {onDelete && (
             <button
@@ -23,6 +23,6 @@ export default function ProcessList({
           )}
         </li>
       ))}
-    </ul>
+    </ol>
   );
 }

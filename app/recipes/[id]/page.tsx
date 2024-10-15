@@ -3,6 +3,9 @@
 import { useRecipes } from '@/app/hooks/Recipe-Context';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import IngredientList from '@/components/organisms/Ingredients';
+import ProcessList from '@/components/organisms/Process';
+import Tag from '@/components/organisms/Tags';
 import Timer from '@/components/organisms/Timer';
 
 export default function RecipeDetail() {
@@ -32,19 +35,12 @@ export default function RecipeDetail() {
         <h2 className='text-2xl font-semibold mb-4'>
           현재 레시피 (버전 {currentVersion.version})
         </h2>
-        <p className='mb-2'>태그: {currentVersion.tags.join(', ')}</p>
+        <h3 className='text-xl font-semibold mb-2'>태그</h3>
+        <Tag tags={currentVersion.tags} />
         <h3 className='text-xl font-semibold mb-2'>재료</h3>
-        <ul className='list-disc list-inside mb-4'>
-          {currentVersion.ingredients.map((ingredient, idx) => (
-            <li key={idx}>{ingredient}</li>
-          ))}
-        </ul>
+        <IngredientList ingredients={currentVersion.ingredients} />
         <h3 className='text-xl font-semibold mb-2'>조리 과정</h3>
-        <ol className='list-decimal list-inside'>
-          {currentVersion.processes.map((process, idx) => (
-            <li key={idx}>{process}</li>
-          ))}
-        </ol>
+        <ProcessList processes={currentVersion.processes} />
       </section>
 
       {/* 3. 버전 목록과 버튼 */}
@@ -55,7 +51,7 @@ export default function RecipeDetail() {
             <h3 className='text-xl font-semibold mb-2'>
               버전 {version.version} ({version.saveTime})
             </h3>
-            <p className='mb-2'>태그: {version.tags.join(', ')}</p>
+            <Tag tags={version.tags} />
             <button
               onClick={() => restoreVersion(recipe.id, version.version)}
               className='mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
