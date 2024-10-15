@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Recipe } from '../../app/hooks/Recipe-Context';
+import { Recipe } from '../../lib/recipe-context';
 import Button from '../atoms/Button';
 import Tag from './Tags';
 

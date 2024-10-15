@@ -1,8 +1,8 @@
 'use client';
 
-import { useRecipes } from '@/app/hooks/Recipe-Context';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { useRecipes } from '@/lib/recipe-context';
 import IngredientList from '@/components/organisms/Ingredients';
 import ProcessList from '@/components/organisms/Process';
 import Tag from '@/components/organisms/Tags';

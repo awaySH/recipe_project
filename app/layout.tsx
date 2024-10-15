@@ -1,8 +1,8 @@
 import { SessionProvider } from 'next-auth/react';
 import { Inter } from 'next/font/google';
+import { RecipeProvider } from '@/lib/recipe-context';
 import Header from '@/components/organisms/Header';
 import './globals.css';
-import { RecipeProvider } from './hooks/Recipe-Context';
 
 const inter = Inter({ subsets: ['latin'] });
 

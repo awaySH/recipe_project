@@ -1,8 +1,8 @@
 'use client';
 
-import { RecipeVersion, useRecipes } from '@/app/hooks/Recipe-Context';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
+import { RecipeVersion, useRecipes } from '@/lib/recipe-context';
 import Button from '@/components/atoms/Button';
 import LabelInput from '@/components/molecules/LabelInput';
 import Ingredients from '@/components/organisms/Ingredients';

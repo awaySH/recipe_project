@@ -1,6 +1,6 @@
 'use client';
 
-import { useRecipes } from '../../app/hooks/Recipe-Context';
+import { useRecipes } from '../../lib/recipe-context';
 import RecipeItem from './RecipeItem';
 
 export default function RecipeList() {
