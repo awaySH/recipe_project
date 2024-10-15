@@ -7,7 +7,11 @@ import LabelInput from '@/components/molecules/LabelInput';
 import Ingredients from '@/components/organisms/Ingredients';
 import Process from '@/components/organisms/Process';
 import Tags from '@/components/organisms/Tags';
-import { type Recipe, useRecipes } from '../../app/hooks/Recipe-Context';
+import {
+  Recipe,
+  RecipeVersion,
+  useRecipes,
+} from '../../app/hooks/Recipe-Context';
 
 export default function Add() {
   const router = useRouter();
@@ -61,25 +65,31 @@ export default function Add() {
   const saveRecipe = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newId = Math.max(...recipes.map((recipe) => recipe[0].id), 0) + 1;
+    const newId = Math.max(...recipes.map((recipe) => recipe.id), 0) + 1;
 
     const now = new Date();
-    const year = now.getFullYear();
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const day = String(now.getDate()).padStart(2, '0');
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-    const seconds = String(now.getSeconds()).padStart(2, '0');
+    const saveTime = now.toLocaleString('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
 
-    const saveTime = `수정일: ${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
-
-    const newRecipe: Recipe = {
-      id: newId,
+    const newVersion: RecipeVersion = {
+      version: 1,
       title: titleRef.current?.value || '',
       tags: tags,
       ingredients: ingredients,
       processes: processes,
       saveTime: saveTime,
+    };
+
+    const newRecipe: Recipe = {
+      id: newId,
+      versions: [newVersion],
+      currentVersion: 1,
     };
 
     addRecipe(newRecipe);

@@ -2,8 +2,8 @@
 
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
-export type Recipe = {
-  id: number;
+export type RecipeVersion = {
+  version: number;
   title: string;
   tags: string[];
   ingredients: string[];
@@ -11,40 +11,53 @@ export type Recipe = {
   saveTime: string;
 };
 
+export type Recipe = {
+  id: number;
+  versions: RecipeVersion[];
+  currentVersion: number;
+};
+
 type RecipeContextType = {
-  recipes: Recipe[][];
+  recipes: Recipe[];
   addRecipe: (recipe: Recipe) => void;
-  editRecipe: (recipe: Recipe) => void;
-  restoreRecipe: (updatedVersions: Recipe[]) => void;
+  editRecipe: (id: number, newVersion: RecipeVersion) => void;
+  restoreVersion: (id: number, versionNumber: number) => void;
   deleteRecipe: (id: number) => void;
 };
 
 const RecipeContext = createContext<RecipeContextType | undefined>(undefined);
 
 type Action =
-  | { type: 'ADD_RECIPE'; recipe: Recipe }
-  | { type: 'EDIT_RECIPE'; recipe: Recipe }
+  | { type: 'ADD_RECIPE'; recipe: RecipeVersion }
+  | { type: 'EDIT_RECIPE'; id: number; newVersion: RecipeVersion }
   | { type: 'DELETE_RECIPE'; id: number }
-  | { type: 'RESTORE_RECIPE'; updatedVersions: Recipe[] }
-  | { type: 'SET_RECIPES'; recipes: Recipe[][] };
+  | { type: 'RESTORE_VERSION'; id: number; versionNumber: number }
+  | { type: 'SET_RECIPES'; recipes: Recipe[] };
 
-const recipeReducer = (state: Recipe[][], action: Action): Recipe[][] => {
+const recipeReducer = (state: Recipe[], action: Action): Recipe[] => {
   switch (action.type) {
     case 'ADD_RECIPE':
-      return [...state, [action.recipe]];
+      return [
+        ...state,
+        { id: state.length + 1, versions: [action.recipe], currentVersion: 1 },
+      ];
     case 'EDIT_RECIPE':
-      return state.map((recipeArray) =>
-        recipeArray[0].id === action.recipe.id
-          ? [...recipeArray, action.recipe]
-          : recipeArray
+      return state.map((recipe) =>
+        recipe.id === action.id
+          ? {
+              ...recipe,
+              versions: [...recipe.versions, action.newVersion],
+              currentVersion: recipe.versions.length + 1,
+            }
+          : recipe
       );
     case 'DELETE_RECIPE':
-      return state.filter((recipeArray) => recipeArray[0].id !== action.id);
-    case 'RESTORE_RECIPE':
-      return state.map((recipeArray) =>
-        recipeArray[0].id === action.updatedVersions[0].id
-          ? action.updatedVersions
-          : recipeArray
+      return state.filter((recipe) => recipe.id !== action.id);
+    case 'RESTORE_VERSION':
+      return state.map((recipe) =>
+        recipe.id === action.id
+          ? { ...recipe, currentVersion: action.versionNumber }
+          : recipe
       );
     case 'SET_RECIPES':
       return action.recipes;
@@ -69,15 +82,15 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
   }, [recipes]);
 
   const addRecipe = (newRecipe: Recipe) => {
-    dispatch({ type: 'ADD_RECIPE', recipe: newRecipe });
+    dispatch({ type: 'ADD_RECIPE', recipe: newRecipe.versions[0] });
   };
 
-  const editRecipe = (newRecipe: Recipe) => {
-    dispatch({ type: 'EDIT_RECIPE', recipe: newRecipe });
+  const editRecipe = (id: number, newVersion: RecipeVersion) => {
+    dispatch({ type: 'EDIT_RECIPE', id, newVersion });
   };
 
-  const restoreRecipe = (updatedVersions: Recipe[]) => {
-    dispatch({ type: 'RESTORE_RECIPE', updatedVersions });
+  const restoreVersion = (id: number, versionNumber: number) => {
+    dispatch({ type: 'RESTORE_VERSION', id, versionNumber });
   };
 
   const deleteRecipe = (id: number) => {
@@ -86,7 +99,7 @@ export const RecipeProvider: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <RecipeContext.Provider
-      value={{ recipes, addRecipe, editRecipe, deleteRecipe, restoreRecipe }}
+      value={{ recipes, addRecipe, editRecipe, deleteRecipe, restoreVersion }}
     >
       {children}
     </RecipeContext.Provider>
