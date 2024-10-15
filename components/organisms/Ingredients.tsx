@@ -1,5 +1,3 @@
-import React from 'react';
-
 type IngredientProps = {
   ingredients?: string[];
   onDelete?: (index: number) => void;

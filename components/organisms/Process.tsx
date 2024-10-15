@@ -1,5 +1,3 @@
-import React from 'react';
-
 type ProcessProps = {
   processes?: string[];
   onDelete?: (index: number) => void;

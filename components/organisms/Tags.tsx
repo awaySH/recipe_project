@@ -1,6 +1,3 @@
-import React from 'react';
-import Button from '../atoms/Button';
-
 type TagProps = {
   tags?: string[];
   onDelete?: (index: number) => void;

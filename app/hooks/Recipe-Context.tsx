@@ -1,12 +1,12 @@
 'use client';
 
-import React, {
+import { useSession } from 'next-auth/react';
+import {
   createContext,
   ReactNode,
   useContext,
   useEffect,
   useReducer,
-  useState,
 } from 'react';
 
 export type RecipeVersion = {
@@ -74,34 +74,29 @@ const recipeReducer = (state: Recipe[], action: Action): Recipe[] => {
 };
 
 export function RecipeProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<{ email: string } | null>(null);
   const [recipes, dispatch] = useReducer(recipeReducer, []);
+  const { data: sess } = useSession();
 
   useEffect(() => {
-    const userString = localStorage.getItem('user');
-    const parsedUser = userString ? JSON.parse(userString) : null;
-    setUser(parsedUser);
-  }, []);
+    if (recipes.length > 0) return;
+    else {
+      if (sess) {
+        const storedRecipes = JSON.parse(
+          localStorage.getItem(`recipes_${sess.user.email}`) || '[]'
+        );
+        dispatch({ type: 'SET_RECIPES', recipes: storedRecipes });
+      }
+    }
+  }, [sess]);
 
-  // 사용자 정보가 변경될 때마다 레시피 로드
   useEffect(() => {
-    if (user) {
-      const storedRecipes = JSON.parse(
-        localStorage.getItem(`recipes_${user.email}`) || '[]'
+    if (sess) {
+      localStorage.setItem(
+        `recipes_${sess.user.email}`,
+        JSON.stringify(recipes)
       );
-      dispatch({ type: 'SET_RECIPES', recipes: storedRecipes });
-    } else {
-      // 로그아웃 시 레시피 초기화
-      dispatch({ type: 'SET_RECIPES', recipes: [] });
     }
-  }, [user]);
-
-  // 레시피가 변경될 때마다 로컬 스토리지에 저장
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem(`recipes_${user.email}`, JSON.stringify(recipes));
-    }
-  }, [recipes, user]);
+  }, [recipes]);
 
   const addRecipe = (newRecipe: Recipe) => {
     dispatch({ type: 'ADD_RECIPE', recipe: newRecipe.versions[0] });

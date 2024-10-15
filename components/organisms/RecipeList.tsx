@@ -1,6 +1,5 @@
 'use client';
 
-import React from 'react';
 import { useRecipes } from '../../app/hooks/Recipe-Context';
 import RecipeItem from './RecipeItem';
 
