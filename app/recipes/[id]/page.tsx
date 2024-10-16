@@ -48,16 +48,18 @@ export default function RecipeDetail() {
         <h2 className='text-2xl font-semibold mb-4'>버전 히스토리</h2>
         {recipe.versions.map((version, index) => (
           <div key={index} className='mb-4 p-4 bg-gray-50 rounded-lg shadow-md'>
-            <h3 className='text-xl font-semibold mb-2'>
-              버전 {version.version} ({version.saveTime})
-            </h3>
+            <div className='flex justify-between items-center'>
+              <h3 className='text-xl font-semibold'>
+                버전 {version.version} ({version.saveTime})
+              </h3>
+              <button
+                onClick={() => restoreVersion(recipe.id, version.version)}
+                className='px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300'
+              >
+                이 버전으로 복원
+              </button>
+            </div>
             <Tag tags={version.tags} />
-            <button
-              onClick={() => restoreVersion(recipe.id, version.version)}
-              className='mt-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600'
-            >
-              이 버전으로 복원
-            </button>
           </div>
         ))}
       </section>
