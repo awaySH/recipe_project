@@ -25,7 +25,7 @@ export default function RecipeList() {
   return (
     <div>
       <div className='my-2 text-xl flex font-bold items-center justify-center'>
-        레시피 목록
+        레시피 목록 🍔
       </div>
       <ul>
         {recipes.map((recipe) => (
