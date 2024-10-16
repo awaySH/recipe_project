@@ -11,7 +11,7 @@ export default function ProcessList({
     <ol className='list-decimal list-inside'>
       {processes.map((process, index) => (
         <li key={index}>
-          <span>{process}</span>
+          <span className='font-semibold'>{process}</span>
           {onDelete && (
             <button
               type='button'

@@ -59,41 +59,102 @@ export default function Timer({ onTimeUp }: TimerProps) {
   };
 
   return (
-    <div>
-      <div>
-        <input
-          type='number'
-          value={hours}
-          onChange={(e) => setHours(Number(e.target.value))}
-          placeholder='Hours'
-          min='0'
-          max='23'
-        />
-        <input
-          type='number'
-          value={minutes}
-          onChange={(e) => setMinutes(Number(e.target.value))}
-          placeholder='Minutes'
-          min='0'
-          max='59'
-        />
-        <input
-          type='number'
-          value={seconds}
-          onChange={(e) => setSeconds(Number(e.target.value))}
-          placeholder='Seconds'
-          min='0'
-          max='59'
-        />
+    <div className='max-w-md mx-auto bg-white rounded-lg overflow-hidden p-6 shadow-md'>
+      <div className='mb-6 flex justify-between items-center'>
+        <div>
+          <input
+            type='number'
+            defaultValue={hours}
+            onChange={(e) => {
+              const inputValue = e.target.value.replace(/^0+/, '');
+              setHours(inputValue === '' ? 0 : Number(inputValue));
+            }}
+            onBlur={(e) => {
+              const value = Math.min(Math.max(Number(e.target.value), 0), 23);
+              setHours(value);
+              e.target.value = value.toString();
+            }}
+            placeholder='Hours'
+            min='0'
+            max='23'
+            className='w-24 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500'
+          />
+          <span className='ml-1 font-semibold text-gray-700'>시</span>
+        </div>
+        <div>
+          <input
+            type='number'
+            defaultValue={minutes}
+            onChange={(e) => {
+              const inputValue = e.target.value.replace(/^0+/, '');
+              setMinutes(inputValue === '' ? 0 : Number(inputValue));
+            }}
+            onBlur={(e) => {
+              const value = Math.min(Math.max(Number(e.target.value), 0), 23);
+              setMinutes(value);
+              e.target.value = value.toString();
+            }}
+            placeholder='Minutes'
+            min='0'
+            max='59'
+            className='w-24 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500'
+          />
+          <span className='ml-1 font-semibold text-gray-700'>분</span>
+        </div>
+        <div>
+          <input
+            type='number'
+            defaultValue={seconds}
+            onChange={(e) => {
+              const inputValue = e.target.value.replace(/^0+/, '');
+              setSeconds(inputValue === '' ? 0 : Number(inputValue));
+            }}
+            onBlur={(e) => {
+              const value = Math.min(Math.max(Number(e.target.value), 0), 23);
+              setSeconds(value);
+              e.target.value = value.toString();
+            }}
+            placeholder='Seconds'
+            min='0'
+            max='59'
+            className='w-24 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none focus:border-blue-500'
+          />
+          <span className='ml-1 font-semibold text-gray-700'>초</span>
+        </div>
       </div>
-      <h2>Time Left {formatTime(timeLeft)}</h2>
-      <button onClick={startTimer} disabled={isRunning}>
-        {timeLeft === 0 ? 'Start' : 'Resume'}
-      </button>
-      <button onClick={pauseTimer} disabled={!isRunning}>
-        Pause
-      </button>
-      <button onClick={resetTimer}>Reset</button>
+      <h2 className='text-3xl font-bold text-center mb-6 text-gray-800'>
+        {formatTime(timeLeft)}
+      </h2>
+      <div className='flex justify-center space-x-4'>
+        <button
+          onClick={startTimer}
+          disabled={isRunning}
+          className={`px-4 py-2 rounded-lg font-semibold text-white ${
+            isRunning
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-green-500 hover:bg-green-600'
+          }`}
+        >
+          {timeLeft === 0 ? 'Start' : 'Resume'}
+        </button>
+        <button
+          onClick={pauseTimer}
+          disabled={!isRunning}
+          className={`px-4 py-2 rounded-lg font-semibold text-white ${
+            !isRunning
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-yellow-500 hover:bg-yellow-600'
+          }`}
+        >
+          Pause
+        </button>
+        <button
+          onClick={resetTimer}
+          className='px-4 py-2 rounded-lg font-semibold text-white bg-red-500 hover:bg-red-600'
+        >
+          Reset
+        </button>
+      </div>
     </div>
   );
 }

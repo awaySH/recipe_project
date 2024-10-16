@@ -109,42 +109,53 @@ export default function EditRecipe() {
 
   return (
     <>
-      <h1>레시피 수정</h1>
-      <form onSubmit={changeRecipe}>
-        <LabelInput
-          label='제목'
-          ref={titleRef}
-          buttonClassNames='hidden'
-          defaultValue={title}
-        />
-        <LabelInput
-          label='태그'
-          ref={tagRef}
-          buttonText='추가'
-          buttonType='button'
-          onClick={addTag}
-        />
-        <Tags tags={tags} onDelete={deleteTag} />
-        <LabelInput
-          label='재료 목록'
-          ref={ingredientRef}
-          buttonText='추가'
-          buttonType='button'
-          onClick={addIngredient}
-        />
-        <Ingredients ingredients={ingredients} onDelete={deleteIngredient} />
-        <LabelInput
-          label='조리 과정'
-          ref={processRef}
-          buttonText='추가'
-          buttonType='button'
-          onClick={addProcess}
-        />
-        <Process processes={processes} onDelete={deleteProcess} />
-        <Button type='submit' variant='btn-success'>
-          레시피 저장
-        </Button>
-      </form>
+      <div className='flex items-center justify-center min-h-screen'>
+        <form
+          onSubmit={changeRecipe}
+          className='bg-gray-50 rounded-lg px-40 py-10 shadow-md'
+        >
+          <div className='text-2xl font-semibold mb-6 text-center'>
+            레시피 수정
+          </div>
+          <LabelInput
+            label='제목'
+            ref={titleRef}
+            buttonClassNames='hidden'
+            defaultValue={title}
+          />
+          <LabelInput
+            label='태그'
+            ref={tagRef}
+            buttonText='추가'
+            buttonType='button'
+            onClick={addTag}
+          />
+          <Tags tags={tags} onDelete={deleteTag} />
+          <div className='mt-3'></div>
+          <LabelInput
+            label='재료 목록'
+            ref={ingredientRef}
+            buttonText='추가'
+            buttonType='button'
+            onClick={addIngredient}
+          />
+          <Ingredients ingredients={ingredients} onDelete={deleteIngredient} />
+          <LabelInput
+            label='조리 과정'
+            ref={processRef}
+            buttonText='추가'
+            buttonType='button'
+            onClick={addProcess}
+          />
+          <Process processes={processes} onDelete={deleteProcess} />
+
+          <div className=' flex items-center justify-center mt-3'>
+            <Button type='submit' variant='success'>
+              레시피 저장
+            </Button>
+          </div>
+        </form>
+      </div>
     </>
   );
 }

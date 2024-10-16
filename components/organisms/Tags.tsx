@@ -5,17 +5,17 @@ type TagProps = {
 
 export default function Tag({ tags = [], onDelete }: TagProps) {
   return (
-    <div className='flex flex-wrap gap-2'>
+    <div className='flex flex-wrap gap-2 mb-1'>
       {tags.map((tag, index) => (
         <span
           key={index}
-          className='bg-slate-200 text-gray-600 py-1 px-2 rounded flex items-center'
+          className='bg-slate-400 text-gray-200 px-2 rounded flex items-center'
         >
-          {tag}
+          #{tag}
           {onDelete && (
             <button
               type='button'
-              className='ml-2 text-gray-600'
+              className='ml-2 text-gray-200'
               onClick={() => onDelete(index)}
             >
               ×

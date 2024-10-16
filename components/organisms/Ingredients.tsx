@@ -11,7 +11,7 @@ export default function IngredientList({
     <ul className='list-disc list-inside mb-4'>
       {ingredients.map((ingredient, index) => (
         <li key={index}>
-          <span>{ingredient}</span>
+          <span className='font-semibold'>{ingredient}</span>
           {onDelete && (
             <button
               type='button'

@@ -13,6 +13,7 @@ const config: Config = {
         foreground: 'var(--foreground)',
         'main-green': '#059212',
         'sub-green': '#06D001',
+        'main-yellow': '#FFDB00',
       },
     },
   },

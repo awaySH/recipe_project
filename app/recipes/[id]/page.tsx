@@ -25,7 +25,7 @@ export default function RecipeDetail() {
       <h1 className='text-3xl font-bold mb-6'>{currentVersion.title}</h1>
 
       {/* 1. 타이머 */}
-      <section className='mb-8 p-4 bg-gray-100 rounded-lg'>
+      <section className='bg-gray-50 mb-8 p-4 rounded-lg shadow-md'>
         <h2 className='text-2xl font-semibold mb-4'>조리 타이머</h2>
         <Timer onTimeUp={() => alert('타이머가 끝났습니다!')} />
       </section>
@@ -47,7 +47,7 @@ export default function RecipeDetail() {
       <section className='mb-8'>
         <h2 className='text-2xl font-semibold mb-4'>버전 히스토리</h2>
         {recipe.versions.map((version, index) => (
-          <div key={index} className='mb-4 p-4 bg-gray-50 rounded-lg'>
+          <div key={index} className='mb-4 p-4 bg-gray-50 rounded-lg shadow-md'>
             <h3 className='text-xl font-semibold mb-2'>
               버전 {version.version} ({version.saveTime})
             </h3>
@@ -62,15 +62,15 @@ export default function RecipeDetail() {
         ))}
       </section>
 
-      <div className='flex gap-4'>
+      <div className='flex gap-4 items-center justify-center'>
         <Link href={`/recipes/edit/${recipe.id}`}>
-          <button className='px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600'>
+          <button className='px-4 py-2 bg-main-yellow text-white rounded hover:bg-green-600'>
             수정하기
           </button>
         </Link>
         <Link href={`/`}>
           <button
-            className='px-4 py-2 bg-red-500 text-white rounded hover:bg-green-600'
+            className='px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600'
             onClick={() => deleteRecipe(+id)}
           >
             삭제하기

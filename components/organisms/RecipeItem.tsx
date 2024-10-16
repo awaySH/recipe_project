@@ -13,14 +13,14 @@ export default function RecipeItem({ recipe }: RecipeItemProps) {
   const currentVersion = recipe.versions[recipe.currentVersion - 1];
 
   return (
-    <section className='m-4 p-4 border rounded-md'>
-      <li key={recipe.id} className='flex flex-col gap-2'>
-        <h3 className='text-bold text-xl'>{currentVersion.title}</h3>
+    <section className='m-4 p-4 shadow-md rounded-md'>
+      <li key={recipe.id} className='font-semibold flex flex-col gap-2'>
+        <div className='font-bold text-xl'>{currentVersion.title}</div>
         <Tag tags={currentVersion.tags} />
-        <p>버전: {recipe.currentVersion}</p>
-        <p>최종 수정일: {currentVersion.saveTime}</p>
+        <div>버전: {recipe.currentVersion}</div>
+        <div>최종 수정일: {currentVersion.saveTime}</div>
         <Link href={`/recipes/${recipe.id}`} className='w-full'>
-          <Button variant='btn-success'>자세히 보기</Button>
+          <Button variant='subsuccess'>자세히 보기</Button>
         </Link>
       </li>
     </section>
